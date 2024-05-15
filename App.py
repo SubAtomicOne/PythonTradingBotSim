@@ -81,7 +81,7 @@ def moneyBot():
                 priceNow = float(dataUse[1]['ethusd'])
                 volNew = float(dataUse[1]['volume24a'])
                 volOld = float(dataUse[0]['volume24a'])
-                diffVol = volNew / volOld
+                diffVol = (volNew - volOld) / volOld
                 print(f"differences in trading Volume in 24hr: {diffVol}")
 
     weightVol = 1
@@ -113,9 +113,25 @@ def moneyBot():
             bid = False
             profLoss = priceNow - stake 
             print(f"Profit/Loss: {profLoss}")
+
+        # Load existing profit/loss data
+            if os.path.exists(PLJson):
+                with open(PLJson, 'r') as json_file:
+                    plData = json.load(json_file)
+            else:
+                plData = []
+
+        # Append new profit/loss data
+            profData = {
+                "Prof/Loss": profLoss
+            }
+            plData.append(profData)
+
+        # Write back to the JSON file
             with open(PLJson, 'w') as json_file:
-                json.dump(profLoss, json_file)
+                json.dump(plData, json_file, indent=1)
             return
+
             #check whether to sell or hold, if sell check to see how much was made or lost and track into a json file with weights
     
 
