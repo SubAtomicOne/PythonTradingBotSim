@@ -137,7 +137,7 @@ def moneyBot():
             return
 
             #check whether to sell or hold, if sell check to see how much was made or lost and track into a json file with weights /// need to do weights maybe
-    
+    #need to save the weight values as well maybe 
 def plotting():
 
     PLJson = os.path.join(os.path.dirname(__file__), 'profLoss.json')
@@ -145,16 +145,17 @@ def plotting():
     with open(PLJson, 'r') as json_file:
         PlData = json.load(json_file)
     profLoss_values = [float(entry.get('Prof/Loss', 0.0)) for entry in PlData]
-    #print(profLoss_values)
 
     plt.plot(profLoss_values)
+    plt.xlabel('Time [by sell]')
+    plt.ylabel('Profit/Loss [usd]')
     plt.show()
 
 def mainProg():
     while True:
         price()
         moneyBot()
-        time.sleep(10)
+        time.sleep(60)
 
 def listen_for_hotkey():
     keyboard.add_hotkey('ctrl+alt+p', plotting)  
