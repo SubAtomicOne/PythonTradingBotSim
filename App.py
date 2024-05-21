@@ -1,3 +1,9 @@
+'''
+Hello, simply run this program to start and help by adding to the source or reporting bugs. 
+To help, there is a plotting function which is called by ctrl + alt + p (for Plot) to show the profit and losses that have occured.
+This is still being worked on so any help will be greatly apprecieated escpecially as I am not a great coder
+'''
+
 import os
 import requests
 import json
@@ -8,9 +14,9 @@ import threading
 import keyboard
 
 
-bid = False
+bid = False #it works and the headache is over
 
-def price():
+def price(): #dolla dolla bill yall
     outputJson = os.path.join(os.path.dirname(__file__), 'output.json')
     url = 'https://api.coinlore.net/api/tickers/'
 
@@ -35,7 +41,7 @@ def price():
     else:
         print(f"Error: {response.status_code} - {response.reason}")
         return
-
+#Cash rules everything around me, C.R.E.A.M get the $
     existing_data = []
     if os.path.exists(outputJson):
         with open(outputJson, 'r') as json_file:
@@ -59,11 +65,11 @@ def price():
 
     with open(outputJson, 'w') as json_file:
         json.dump(existing_data, json_file, indent=1)
-
+    #dump it just like all my exes
     return existing_data
 
 
-def moneyBot():
+def moneyBot(): #MoneyTrees
     outputJson = os.path.join(os.path.dirname(__file__), 'output.json')
     PLJson = os.path.join(os.path.dirname(__file__), 'profLoss.json')
    
@@ -71,7 +77,7 @@ def moneyBot():
     os.path.exists(outputJson)
     with open(outputJson, 'r') as json_file:
         existing_data = json.load(json_file)
-
+#pick your poison tell me what you doing
     if existing_data:
         if os.path.exists(outputJson):
             if len(existing_data) >= 2:
@@ -87,7 +93,7 @@ def moneyBot():
                 volOld = float(dataUse[0]['volume24a'])
                 diffVol = (volNew - volOld) / volOld
                 print(f"differences in trading Volume in 24hr: {diffVol}")
-
+#but the one in front of the gun lives forever
     weightVol = 15
     weightPer = 1
         
@@ -118,26 +124,23 @@ def moneyBot():
             profLoss = priceNow - stake 
             print(f"Profit/Loss: {profLoss}")
 
-        # Load existing profit/loss data
             if os.path.exists(PLJson):
                 with open(PLJson, 'r') as json_file:
                     plData = json.load(json_file)
             else:
                 plData = []
 
-        # Append new profit/loss data
             profData = {
                 "Prof/Loss": profLoss
             }
             plData.append(profData)
 
-        # Write back to the JSON file
             with open(PLJson, 'w') as json_file:
                 json.dump(plData, json_file, indent=1)
             return
 
             #check whether to sell or hold, if sell check to see how much was made or lost and track into a json file with weights /// need to do weights maybe
-    #need to save the weight values as well maybe 
+    #need to save the weight values as well maybe  (WIP)
 def plotting():
 
     PLJson = os.path.join(os.path.dirname(__file__), 'profLoss.json')
@@ -147,12 +150,12 @@ def plotting():
     profLoss_values = [float(entry.get('Prof/Loss', 0.0)) for entry in PlData]
 
     plt.plot(profLoss_values)
-    plt.xlabel('Time [by sell]')
+    plt.xlabel('# of Sells')
     plt.ylabel('Profit/Loss [usd]')
     plt.show()
 
 def mainProg():
-    while True:
+    while True: #Don't know how to loop  ¯\_(ツ)_/¯
         price()
         moneyBot()
         time.sleep(60)
