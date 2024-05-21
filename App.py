@@ -4,6 +4,8 @@ import json
 import datetime
 import time
 import matplotlib.pyplot as plt
+import threading
+import keyboard
 
 
 bid = False
@@ -148,9 +150,25 @@ def plotting():
     plt.plot(profLoss_values)
     plt.show()
 
-if __name__ == "__main__":
-    while 1 == 1: 
+def mainProg():
+    while True:
         price()
         moneyBot()
-        plotting()
-        time.sleep(60) 
+        time.sleep(10)
+
+def listen_for_hotkey():
+    keyboard.add_hotkey('ctrl+alt+p', plotting)  
+
+
+
+if __name__ == "__main__":
+    main_thread = threading.Thread(target=mainProg)
+    main_thread.daemon = True
+    main_thread.start()
+
+    hotkey_thread = threading.Thread(target=listen_for_hotkey)
+    hotkey_thread.daemon = True
+    hotkey_thread.start()
+
+    main_thread.join()
+    hotkey_thread.join()
