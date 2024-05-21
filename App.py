@@ -3,6 +3,8 @@ import requests
 import json
 import datetime
 import time
+import matplotlib.pyplot as plt
+
 
 bid = False
 
@@ -84,8 +86,8 @@ def moneyBot():
                 diffVol = (volNew - volOld) / volOld
                 print(f"differences in trading Volume in 24hr: {diffVol}")
 
-    weightVol = 1
-    weightPer = .5
+    weightVol = 15
+    weightPer = 1
         
     weightVol = weightVol * diffVol
     weightPer = weightPer * diffPer
@@ -132,13 +134,23 @@ def moneyBot():
                 json.dump(plData, json_file, indent=1)
             return
 
-            #check whether to sell or hold, if sell check to see how much was made or lost and track into a json file with weights
+            #check whether to sell or hold, if sell check to see how much was made or lost and track into a json file with weights /// need to do weights maybe
     
+def plotting():
 
+    PLJson = os.path.join(os.path.dirname(__file__), 'profLoss.json')
+    PlData = []
+    with open(PLJson, 'r') as json_file:
+        PlData = json.load(json_file)
+    profLoss_values = [float(entry.get('Prof/Loss', 0.0)) for entry in PlData]
+    #print(profLoss_values)
+
+    plt.plot(profLoss_values)
+    plt.show()
 
 if __name__ == "__main__":
     while 1 == 1: 
         price()
         moneyBot()
+        plotting()
         time.sleep(60) 
-
