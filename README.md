@@ -8,3 +8,4 @@ Start by using pip install requirements.txt
 
 To run simply run the python scrupt it it will create all the necessary folders and files
 
+Simply use ctrl+alt+p to show the plot of the profit and losses 
