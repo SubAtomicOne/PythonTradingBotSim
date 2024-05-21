@@ -24,3 +24,6 @@ The graphing currently (or used to) look something like this.
 - [ ] Fine tune the weights and maybe add more
 - [ ] Finish ReadMe
 - [ ] AutoCreate folders into Code to clean it up
+
+
+Next, I am trying to plan something so that is puts all options into a .txt file witht configs
